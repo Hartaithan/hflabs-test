@@ -63,3 +63,4 @@ typings/
 /public
 
 .parcel-cache
+.cache
