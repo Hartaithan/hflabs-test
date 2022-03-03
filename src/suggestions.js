@@ -3,17 +3,34 @@ import "regenerator-runtime/runtime";
 const template = document.createElement("template");
 template.innerHTML = `
     <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            color: #ffffff;
+        }
         .wrapper {
+            width: 100%;
             position: relative;
         }
         .suggestions {
             position: absolute;
-            top: 20px;
+            top: 45px;
             left: 0;
+        }
+        input {
+            width: 100%;
+            height: 40px;
+            background: transparent;
+            border: 2px solid #2d2d2d;
+            border-radius: 8px;
+            font-size: 16px;
+            padding: 5px 10px;
+            outline: none;
         }
     </style>
     <div class="wrapper">
-        <input type="text">
+        <input type="text" placeholder="Введите название, ИНН, ОГРН или адрес организации">
         <div class="suggestions"></div>
     </div>
 `;

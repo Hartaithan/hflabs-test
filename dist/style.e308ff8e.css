@@ -6,13 +6,52 @@
   font-size: 14px;
   font-weight: normal;
   transition: all 0.2s ease-out;
+  color: #ffffff;
 }
 
 html,
-body,
-#app {
+body {
   height: 100%;
   width: 100%;
+  background: #070707;
+}
+
+body {
+  margin: 0 auto;
+  padding: 24px 0;
+  max-width: 500px;
+}
+
+.form {
+  width: 100%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  background: #2d2d2d;
+  border-radius: 12px;
+  padding: 20px 25px;
+  margin-top: 16px;
+}
+.form__group {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.form__group:not(:last-child) {
+  margin-bottom: 18px;
+}
+.form__group label {
+  font-size: 1rem;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+.form__group input {
+  height: 30px;
+  padding: 0 10px;
+  border: none;
+  border-radius: 0.25rem;
+  outline: none;
+  margin-bottom: 4px;
 }
 
 /*# sourceMappingURL=/style.e308ff8e.css.map */
