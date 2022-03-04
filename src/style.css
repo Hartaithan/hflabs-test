@@ -70,5 +70,8 @@ body {
     width: 90%;
     max-width: 90%;
   }
+  .form {
+    padding: 15px;
+  }
 }
 /*# sourceMappingURL=style.css.map */

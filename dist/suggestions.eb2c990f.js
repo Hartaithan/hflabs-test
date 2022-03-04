@@ -947,6 +947,7 @@ var InputSuggestions = /*#__PURE__*/function (_HTMLElement) {
     _this.results = [];
     _this.list;
     _this.input;
+    _this.resultsLength = _this.getAttribute("length") || 5;
     return _this;
   }
 
@@ -997,7 +998,7 @@ var InputSuggestions = /*#__PURE__*/function (_HTMLElement) {
                 json = _context.sent;
 
                 if (json.suggestions.length > 5) {
-                  this.results = _toConsumableArray(json.suggestions).slice(0, 5);
+                  this.results = _toConsumableArray(json.suggestions).slice(0, this.resultsLength);
                 } else {
                   this.results = json.suggestions;
                 }

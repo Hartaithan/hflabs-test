@@ -67,6 +67,7 @@ class InputSuggestions extends HTMLElement {
     this.results = [];
     this.list;
     this.input;
+    this.resultsLength = this.getAttribute("length") || 5;
   }
 
   fillForm(id) {
@@ -97,7 +98,7 @@ class InputSuggestions extends HTMLElement {
     const data = await fetch(url, options);
     const json = await data.json();
     if (json.suggestions.length > 5) {
-      this.results = [...json.suggestions].slice(0, 5);
+      this.results = [...json.suggestions].slice(0, this.resultsLength);
     } else {
       this.results = json.suggestions;
     }
