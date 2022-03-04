@@ -1056,6 +1056,11 @@ var InputSuggestions = /*#__PURE__*/function (_HTMLElement) {
       this.input.addEventListener("focusin", function () {
         _this3.list.style.display = "block";
       });
+      this.input.addEventListener("focusout", function () {
+        setTimeout(function () {
+          _this3.list.style.display = "none";
+        }, 100);
+      });
     }
   }, {
     key: "disconnectedCallback",

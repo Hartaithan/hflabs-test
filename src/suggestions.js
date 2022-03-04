@@ -137,6 +137,11 @@ class InputSuggestions extends HTMLElement {
     this.input.addEventListener("focusin", () => {
       this.list.style.display = "block";
     });
+    this.input.addEventListener("focusout", () => {
+      setTimeout(() => {
+        this.list.style.display = "none";
+      }, 100);
+    });
   }
 
   disconnectedCallback() {
