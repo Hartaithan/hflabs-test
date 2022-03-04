@@ -65,6 +65,8 @@ class InputSuggestions extends HTMLElement {
     this.attachShadow({ mode: "open" });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
     this.results = [];
+    this.list;
+    this.input;
   }
 
   async getResults(query) {
@@ -86,6 +88,15 @@ class InputSuggestions extends HTMLElement {
     const data = await fetch(url, options);
     const json = await data.json();
     return json.suggestions;
+  }
+
+  fillForm(id) {
+    const form = document.querySelector("form");
+    const { data } = this.results[Number(id)];
+    form.elements["name_short"].value = data.name.short_with_opf;
+    form.elements["name_full"].value = data.name.full_with_opf;
+    form.elements["inn_kpp"].value = `${data.inn} / ${data.kpp}`;
+    form.elements["address"].value = data.address.unrestricted_value;
   }
 
   async fetchSuggestions(e) {
@@ -1828,11 +1839,9 @@ class InputSuggestions extends HTMLElement {
       },
     ];
 
-    const list = this.shadowRoot.querySelector(".suggestions");
-
     if (this.results.length > 0 && e.target.value.length > 0) {
-      list.style["display"] = "block";
-      list.innerHTML = "";
+      this.list.style["display"] = "block";
+      this.list.innerHTML = "";
       this.results.forEach((result, index) => {
         const el = document.createElement("div");
         el.classList.add("suggestion-item");
@@ -1841,24 +1850,29 @@ class InputSuggestions extends HTMLElement {
             <p>${result.value}</p>
             <p>${result.data.address.value}</p>
         `;
-        el.addEventListener("click", (e) => {
-          const id = e.target.dataset.id;
-          if (id) {
-            console.log(id);
-          }
-        });
-        list.appendChild(el);
+        this.list.appendChild(el);
       });
     }
     if (e.target.value.length === 0) {
-      list.style["display"] = "none";
+      this.list.style["display"] = "none";
     }
   }
 
   connectedCallback() {
-    this.shadowRoot
-      .querySelector("input")
-      .addEventListener("input", (e) => this.fetchSuggestions(e));
+    this.input = this.shadowRoot.querySelector("input");
+    this.list = this.shadowRoot.querySelector(".suggestions");
+    this.list.addEventListener("click", (e) => {
+      if (e.target.nodeName === "DIV") {
+        this.fillForm(e.target.dataset.id);
+      } else {
+        this.fillForm(e.target.parentElement.dataset.id);
+      }
+      this.list.style["display"] = "none";
+    });
+    this.input.addEventListener("input", (e) => this.fetchSuggestions(e));
+    this.input.addEventListener("focusin", () => {
+      this.list.style["display"] = "block";
+    });
   }
 
   disconnectedCallback() {

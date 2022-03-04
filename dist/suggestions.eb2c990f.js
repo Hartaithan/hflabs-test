@@ -933,6 +933,8 @@ var InputSuggestions = /*#__PURE__*/function (_HTMLElement) {
     _this.shadowRoot.appendChild(template.content.cloneNode(true));
 
     _this.results = [];
+    _this.list;
+    _this.input;
     return _this;
   }
 
@@ -986,10 +988,21 @@ var InputSuggestions = /*#__PURE__*/function (_HTMLElement) {
       return getResults;
     }()
   }, {
+    key: "fillForm",
+    value: function fillForm(id) {
+      var form = document.querySelector("form");
+      var data = this.results[Number(id)].data;
+      form.elements["name_short"].value = data.name.short_with_opf;
+      form.elements["name_full"].value = data.name.full_with_opf;
+      form.elements["inn_kpp"].value = "".concat(data.inn, " / ").concat(data.kpp);
+      form.elements["address"].value = data.address.unrestricted_value;
+    }
+  }, {
     key: "fetchSuggestions",
     value: function () {
       var _fetchSuggestions = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(e) {
-        var list;
+        var _this2 = this;
+
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -2692,32 +2705,25 @@ var InputSuggestions = /*#__PURE__*/function (_HTMLElement) {
                     employee_count: null
                   }
                 }];
-                list = this.shadowRoot.querySelector(".suggestions");
 
                 if (this.results.length > 0 && e.target.value.length > 0) {
-                  list.style["display"] = "block";
-                  list.innerHTML = "";
+                  this.list.style["display"] = "block";
+                  this.list.innerHTML = "";
                   this.results.forEach(function (result, index) {
                     var el = document.createElement("div");
                     el.classList.add("suggestion-item");
                     el.setAttribute("data-id", index);
                     el.innerHTML += "\n            <p>".concat(result.value, "</p>\n            <p>").concat(result.data.address.value, "</p>\n        ");
-                    el.addEventListener("click", function (e) {
-                      var id = e.target.dataset.id;
 
-                      if (id) {
-                        console.log(id);
-                      }
-                    });
-                    list.appendChild(el);
+                    _this2.list.appendChild(el);
                   });
                 }
 
                 if (e.target.value.length === 0) {
-                  list.style["display"] = "none";
+                  this.list.style["display"] = "none";
                 }
 
-              case 4:
+              case 3:
               case "end":
                 return _context2.stop();
             }
@@ -2734,10 +2740,24 @@ var InputSuggestions = /*#__PURE__*/function (_HTMLElement) {
   }, {
     key: "connectedCallback",
     value: function connectedCallback() {
-      var _this2 = this;
+      var _this3 = this;
 
-      this.shadowRoot.querySelector("input").addEventListener("input", function (e) {
-        return _this2.fetchSuggestions(e);
+      this.input = this.shadowRoot.querySelector("input");
+      this.list = this.shadowRoot.querySelector(".suggestions");
+      this.list.addEventListener("click", function (e) {
+        if (e.target.nodeName === "DIV") {
+          _this3.fillForm(e.target.dataset.id);
+        } else {
+          _this3.fillForm(e.target.parentElement.dataset.id);
+        }
+
+        _this3.list.style["display"] = "none";
+      });
+      this.input.addEventListener("input", function (e) {
+        return _this3.fetchSuggestions(e);
+      });
+      this.input.addEventListener("focusin", function () {
+        _this3.list.style["display"] = "block";
       });
     }
   }, {
@@ -2779,7 +2799,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44405" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56851" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
