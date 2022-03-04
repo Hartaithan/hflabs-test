@@ -64,6 +64,7 @@ class InputSuggestions extends HTMLElement {
     super();
     this.attachShadow({ mode: "open" });
     this.shadowRoot.appendChild(template.content.cloneNode(true));
+    this.results = [];
   }
 
   async getResults(query) {
@@ -105,8 +106,8 @@ class InputSuggestions extends HTMLElement {
 
     // const data = await fetch(url, options);
     // const json = await data.json();
-    // const results = json.suggestions;
-    const results = [
+    // this.results = json.suggestions;
+    this.results = [
       {
         value: 'ООО "МОТОРИКА"',
         unrestricted_value: 'ООО "МОТОРИКА"',
@@ -1829,16 +1830,23 @@ class InputSuggestions extends HTMLElement {
 
     const list = this.shadowRoot.querySelector(".suggestions");
 
-    if (results.length > 0 && e.target.value.length > 0) {
+    if (this.results.length > 0 && e.target.value.length > 0) {
       list.style["display"] = "block";
       list.innerHTML = "";
-      results.forEach((result) => {
+      this.results.forEach((result, index) => {
         const el = document.createElement("div");
         el.classList.add("suggestion-item");
+        el.setAttribute("data-id", index);
         el.innerHTML += `
             <p>${result.value}</p>
             <p>${result.data.address.value}</p>
         `;
+        el.addEventListener("click", (e) => {
+          const id = e.target.dataset.id;
+          if (id) {
+            console.log(id);
+          }
+        });
         list.appendChild(el);
       });
     }

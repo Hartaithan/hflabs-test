@@ -932,6 +932,7 @@ var InputSuggestions = /*#__PURE__*/function (_HTMLElement) {
 
     _this.shadowRoot.appendChild(template.content.cloneNode(true));
 
+    _this.results = [];
     return _this;
   }
 
@@ -988,7 +989,7 @@ var InputSuggestions = /*#__PURE__*/function (_HTMLElement) {
     key: "fetchSuggestions",
     value: function () {
       var _fetchSuggestions = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(e) {
-        var results, list;
+        var list;
         return regeneratorRuntime.wrap(function _callee2$(_context2) {
           while (1) {
             switch (_context2.prev = _context2.next) {
@@ -1008,8 +1009,8 @@ var InputSuggestions = /*#__PURE__*/function (_HTMLElement) {
                 // };
                 // const data = await fetch(url, options);
                 // const json = await data.json();
-                // const results = json.suggestions;
-                results = [{
+                // this.results = json.suggestions;
+                this.results = [{
                   value: 'ООО "МОТОРИКА"',
                   unrestricted_value: 'ООО "МОТОРИКА"',
                   data: {
@@ -2693,13 +2694,21 @@ var InputSuggestions = /*#__PURE__*/function (_HTMLElement) {
                 }];
                 list = this.shadowRoot.querySelector(".suggestions");
 
-                if (results.length > 0 && e.target.value.length > 0) {
+                if (this.results.length > 0 && e.target.value.length > 0) {
                   list.style["display"] = "block";
                   list.innerHTML = "";
-                  results.forEach(function (result) {
+                  this.results.forEach(function (result, index) {
                     var el = document.createElement("div");
                     el.classList.add("suggestion-item");
+                    el.setAttribute("data-id", index);
                     el.innerHTML += "\n            <p>".concat(result.value, "</p>\n            <p>").concat(result.data.address.value, "</p>\n        ");
+                    el.addEventListener("click", function (e) {
+                      var id = e.target.dataset.id;
+
+                      if (id) {
+                        console.log(id);
+                      }
+                    });
                     list.appendChild(el);
                   });
                 }
