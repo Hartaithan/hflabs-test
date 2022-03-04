@@ -117,6 +117,12 @@ class InputSuggestions extends HTMLElement {
         this.list.appendChild(el);
       });
     }
+    if (this.results.length === 0) {
+      const el = document.createElement("p");
+      el.innerText = "Ничего не найдено";
+      el.style.padding = "10px";
+      this.list.appendChild(el);
+    }
     if (this.input.value.length === 0) {
       this.list.style.display = "none";
     }

@@ -967,7 +967,7 @@ var InputSuggestions = /*#__PURE__*/function (_HTMLElement) {
       var _fetchSuggestions = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(e) {
         var _this2 = this;
 
-        var url, token, options, data, json;
+        var url, token, options, data, json, el;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -1016,11 +1016,18 @@ var InputSuggestions = /*#__PURE__*/function (_HTMLElement) {
                   });
                 }
 
+                if (this.results.length === 0) {
+                  el = document.createElement("p");
+                  el.innerText = "Ничего не найдено";
+                  el.style.padding = "10px";
+                  this.list.appendChild(el);
+                }
+
                 if (this.input.value.length === 0) {
                   this.list.style.display = "none";
                 }
 
-              case 12:
+              case 13:
               case "end":
                 return _context.stop();
             }
