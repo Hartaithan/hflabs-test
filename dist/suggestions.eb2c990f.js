@@ -912,7 +912,7 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 var template = document.createElement("template");
-template.innerHTML = "\n    <link href=\"suggestions.css\" rel=\"stylesheet\">\n    <div class=\"wrapper\">\n        <input type=\"text\" placeholder=\"\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u0435, \u0418\u041D\u041D, \u041E\u0413\u0420\u041D \u0438\u043B\u0438 \u0430\u0434\u0440\u0435\u0441 \u043E\u0440\u0433\u0430\u043D\u0438\u0437\u0430\u0446\u0438\u0438\">\n        <div class=\"suggestions\"></div>\n    </div>\n";
+template.innerHTML = "\n    <style>\n      * {\n        padding: 0;\n        margin: 0;\n        box-sizing: border-box;\n        color: #ffffff;\n      }\n      .wrapper {\n        width: 100%;\n        position: relative;\n      }\n      .suggestions {\n        width: 100%;\n        position: absolute;\n        top: 45px;\n        left: 0;\n        background: #3b3b3b;\n        border-radius: 8px;\n        overflow: hidden;\n        z-index: 10;\n      }\n      .suggestion-item {\n        height: fit-content;\n        background: #3b3b3b;\n        display: flex;\n        flex-direction: column;\n        justify-content: center;\n        align-items: flex-start;\n        padding: 10px;\n        p:first-child {\n          margin-bottom: 5px;\n        }\n      }\n      .suggestion-item > p:first-child {\n        margin-bottom: 5px;\n      }\n      .suggestion-item:hover {\n        background: #585858;\n        cursor: pointer;\n      }\n      input {\n        width: 100%;\n        height: 40px;\n        background: transparent;\n        border: 2px solid #2d2d2d;\n        border-radius: 8px;\n        font-size: 16px;\n        padding: 5px 10px;\n        outline: none;\n      }\n    </style>\n    <div class=\"wrapper\">\n        <input type=\"text\" placeholder=\"\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u0435, \u0418\u041D\u041D, \u041E\u0413\u0420\u041D \u0438\u043B\u0438 \u0430\u0434\u0440\u0435\u0441 \u043E\u0440\u0433\u0430\u043D\u0438\u0437\u0430\u0446\u0438\u0438\">\n        <div class=\"suggestions\"></div>\n    </div>\n";
 
 var InputSuggestions = /*#__PURE__*/function (_HTMLElement) {
   _inherits(InputSuggestions, _HTMLElement);
@@ -2699,7 +2699,7 @@ var InputSuggestions = /*#__PURE__*/function (_HTMLElement) {
                   results.forEach(function (result) {
                     var el = document.createElement("div");
                     el.classList.add("suggestion-item");
-                    el.innerHTML += "\n            <p>".concat(result.value, "</p>\n        ");
+                    el.innerHTML += "\n            <p>".concat(result.value, "</p>\n            <p>").concat(result.data.address.value, "</p>\n        ");
                     list.appendChild(el);
                   });
                 }
@@ -2770,7 +2770,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44355" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "44405" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -2,7 +2,57 @@ import "regenerator-runtime/runtime";
 
 const template = document.createElement("template");
 template.innerHTML = `
-    <link href="suggestions.css" rel="stylesheet">
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        color: #ffffff;
+      }
+      .wrapper {
+        width: 100%;
+        position: relative;
+      }
+      .suggestions {
+        width: 100%;
+        position: absolute;
+        top: 45px;
+        left: 0;
+        background: #3b3b3b;
+        border-radius: 8px;
+        overflow: hidden;
+        z-index: 10;
+      }
+      .suggestion-item {
+        height: fit-content;
+        background: #3b3b3b;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        padding: 10px;
+        p:first-child {
+          margin-bottom: 5px;
+        }
+      }
+      .suggestion-item > p:first-child {
+        margin-bottom: 5px;
+      }
+      .suggestion-item:hover {
+        background: #585858;
+        cursor: pointer;
+      }
+      input {
+        width: 100%;
+        height: 40px;
+        background: transparent;
+        border: 2px solid #2d2d2d;
+        border-radius: 8px;
+        font-size: 16px;
+        padding: 5px 10px;
+        outline: none;
+      }
+    </style>
     <div class="wrapper">
         <input type="text" placeholder="Введите название, ИНН, ОГРН или адрес организации">
         <div class="suggestions"></div>
@@ -1787,6 +1837,7 @@ class InputSuggestions extends HTMLElement {
         el.classList.add("suggestion-item");
         el.innerHTML += `
             <p>${result.value}</p>
+            <p>${result.data.address.value}</p>
         `;
         list.appendChild(el);
       });
